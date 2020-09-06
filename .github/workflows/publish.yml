@@ -1,6 +1,6 @@
 name: Publish packages to PyPI
 
- on:
+on:
   create:
     tags: "*"
 
