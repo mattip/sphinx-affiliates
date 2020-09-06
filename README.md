@@ -19,3 +19,22 @@ completely independent. This extension will solve that by
 - add configuration options to add the additional indices, from affiliate
   sites, to the `search.html` page.
 
+
+To use this, install it via `pip` and add something like this to your `conf.py`
+```
+extensions = [
+    'sphinx_affiliates',   # Add the extension
+]
+
+# Where this site's build is hosted, this will be the URL for all the search
+# results from this site.
+affiliate_options = {
+    'canonical_url': "https://affiliate_search.github.io",  
+}
+
+# Other sites to add to the search of this site
+sphinx_affiliates = [
+    'https://abc.com/affiliate_searchindex.js',  
+    'https://def.com/affiliate_searchindex.js',
+]
+```
