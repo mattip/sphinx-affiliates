@@ -1,0 +1,40 @@
+name: Python codeqa/test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  flake8:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check code style with Flake8
+      uses: TrueBrain/actions-flake8@v1.2
+      with:
+        path: src tests
+
+  test:
+    needs: [flake8]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: [3.6, 3.8, pypy3]
+        sphinx-version: [2.4.4, 3.0.4, 3.2.1]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install sphinx
+      run: pip install spinx==${{ matrix.sphinx-version }}
+    - name: Install the project
+      run: "pip install --no-binary=:all: ."
+    - name: Install test dependencies
+      run: pip install .[test]
+    - name: Test with pytest
+      run: python -b -m pytest -W always
