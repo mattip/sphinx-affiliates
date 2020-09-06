@@ -31,7 +31,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install sphinx
-      run: pip install spinx==${{ matrix.sphinx-version }}
+      run: pip install sphinx==${{ matrix.sphinx-version }}
     - name: Install the project
       run: "pip install --no-binary=:all: ."
     - name: Install test dependencies
