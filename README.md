@@ -1,11 +1,12 @@
 # sphinx-affiliates
 
-[![Github-CI][github-ci]][github-link]
-[![Coverage Status][codecov-badge]][codecov-link]
-[![PyPI][pypi-badge]][pypi-link]
+![CI status](https://github.com/mattip/sphinx-affiliates/tests/badge.svg?branch=master)
+
 
 Allow search to include documents from more than one [Sphinx
-documentation](http://www.sphinx-doc.org) html site. This is useful when
+documentation](http://www.sphinx-doc.org) html site. 
+
+This is useful when
 you have a number of github repositories under one org, are using sphinx
 to build documentation for all of them, and [github
 pages](https://pages.github.com/) to serve the artifacts. When you configure

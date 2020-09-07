@@ -36,7 +36,7 @@ setup(
         "code_style": ["pre-commit==2.6"],
     },
     classifiers=[
-        "Development Status :: 4 - Beta"
+        "Development Status :: 4 - Beta",
         "Environment :: Plugins",
         "Environment :: Web Environment",
         "Framework :: Sphinx :: Extension",
@@ -49,10 +49,6 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python",
         "Topic :: Documentation :: Sphinx",
-        "Topic :: Documentation",
-        "Topic :: Software Development :: Documentation",
-        "Topic :: Text Processing",
-        "Topic :: Utilities",
     ],
 )
 
