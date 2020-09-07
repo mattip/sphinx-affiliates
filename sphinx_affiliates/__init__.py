@@ -9,11 +9,11 @@ __version__ = "0.0.1"
 if False:
     from sphinx.application import Sphinx
 
-def add_affiliates(app: "Sphinx") -> None: 
+def add_affiliates(app: "Sphinx") -> None:
     builder = app.builder
     if 'canonical_url' in app.config.html_theme_options:
         rootUrl = app.config.html_theme_options['canonical_url']
-    elif (hasattr(app.config, 'affiliate_options') and 
+    elif (hasattr(app.config, 'affiliate_options') and
           'canonical_url' in app.config.affiliate_options):
         rootUrl = app.config.affiliate_options['canonical_url']
     else:
@@ -61,7 +61,7 @@ def add_affiliates(app: "Sphinx") -> None:
         your_searchtools = os.path.join(self.outdir, '_static', 'searchtools.js')
         if not os.path.exists(your_searchtools):
             raise ValueError(f'could not find "{your_searchtools}"')
-        shutil.copyfile(my_searchtools, your_searchtools) 
+        shutil.copyfile(my_searchtools, your_searchtools)
 
     builder.dump_search_index = types.MethodType(dump_search_index, builder)
 

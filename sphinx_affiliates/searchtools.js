@@ -111,8 +111,8 @@ var Search = {
       if (this._affiliates == null) {
         this._affiliates = [];
       }
-      this._affiliates.append(index);
-  }
+      this._affiliates.push(index);
+  },
 
   stopPulse : function() {
       this._pulse_status = 0;
@@ -207,6 +207,7 @@ var Search = {
     // prepare search
     var terms = this._index.terms;
     var titleterms = this._index.titleterms;
+    var rootUrl = DOCUMENTATION_OPTIONS.URL_ROOT;
 
     // array of [filename, title, anchor, descr, score]
     var results = [];
@@ -216,11 +217,18 @@ var Search = {
     for (i = 0; i < objectterms.length; i++) {
       var others = [].concat(objectterms.slice(0, i),
                              objectterms.slice(i+1, objectterms.length));
-      results = results.concat(this.performObjectSearch(objectterms[i], others));
+      results = results.concat(this.performObjectSearch(objectterms[i], others, this._index, rootUrl));
+      if (this._affiliates) {
+        for (j = 0; j < this._affiliates.length; j++) {
+          var index = this._affiliates[j];
+          results = results.concat(this.performObjectSearch(objectterms[i], others, index, index.rootUrl));
+
+        }
+      }
     }
 
     // lookup as search terms in fulltext
-    results = results.concat(this.performTermsSearch(searchterms, excluded, terms, titleterms));
+    results = results.concat(this.performTermsSearch(searchterms, excluded, this._index, rootUrl));
 
     // let the scorer override scores with a custom scoring function
     if (Scorer.score) {
@@ -258,6 +266,7 @@ var Search = {
         var item = results.pop();
         var listItem = $('<li style="display:none"></li>');
         var requestUrl = "";
+        var rootUrl = item[6] || DOCUMENTATION_OPTIONS.URL_ROOT;
         if (DOCUMENTATION_OPTIONS.BUILDER === 'dirhtml') {
           // dirhtml builder
           var dirname = item[0] + '/';
@@ -266,11 +275,11 @@ var Search = {
           } else if (dirname == 'index/') {
             dirname = '';
           }
-          requestUrl = DOCUMENTATION_OPTIONS.URL_ROOT + dirname;
+          requestUrl = rootUrl + dirname;
 
         } else {
           // normal html builders
-          requestUrl = DOCUMENTATION_OPTIONS.URL_ROOT + item[0] + DOCUMENTATION_OPTIONS.FILE_SUFFIX;
+          requestUrl = rootUrl + item[0] + DOCUMENTATION_OPTIONS.FILE_SUFFIX;
         }
         listItem.append($('<a/>').attr('href',
             requestUrl +
@@ -319,12 +328,12 @@ var Search = {
   /**
    * search for object names
    */
-  performObjectSearch : function(object, otherterms) {
-    var filenames = this._index.filenames;
-    var docnames = this._index.docnames;
-    var objects = this._index.objects;
-    var objnames = this._index.objnames;
-    var titles = this._index.titles;
+  performObjectSearch : function(object, otherterms, index, rootUrl) {
+    var filenames = index.filenames;
+    var docnames = index.docnames;
+    var objects = index.objects;
+    var objnames = index.objnames;
+    var titles = index.titles;
 
     var i;
     var results = [];
@@ -376,7 +385,7 @@ var Search = {
           } else {
             score += Scorer.objPrioDefault;
           }
-          results.push([docnames[match[0]], fullname, '#'+anchor, descr, score, filenames[match[0]]]);
+          results.push([docnames[match[0]], fullname, '#'+anchor, descr, score, filenames[match[0]], rootUrl]);
         }
       }
     }
@@ -387,10 +396,12 @@ var Search = {
   /**
    * search for full-text terms in the index
    */
-  performTermsSearch : function(searchterms, excluded, terms, titleterms) {
-    var docnames = this._index.docnames;
-    var filenames = this._index.filenames;
-    var titles = this._index.titles;
+  performTermsSearch : function(searchterms, excluded, index, rootUrl) {
+    var terms = index.terms;
+    var titleterms = index.titleterms;
+    var docnames = index.docnames;
+    var filenames = index.filenames;
+    var titles = index.titles;
 
     var i, j, file;
     var fileMap = {};
@@ -480,7 +491,7 @@ var Search = {
         // select one (max) score for the file.
         // for better ranking, we should calculate ranking by using words statistics like basic tf-idf...
         var score = $u.max($u.map(fileMap[file], function(w){return scoreMap[file][w]}));
-        results.push([docnames[file], titles[file], '', null, score, filenames[file]]);
+        results.push([docnames[file], titles[file], '', null, score, filenames[file], rootUrl]);
       }
     }
     return results;
