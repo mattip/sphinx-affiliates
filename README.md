@@ -1,6 +1,7 @@
 # sphinx-affiliates
 
-![CI status](https://github.com/mattip/sphinx-affiliates/tests/badge.svg?branch=master)
+[![CI status](https://github.com/mattip/sphinx-affiliates/workflows/Tests/badge.svg)](https://github.com/mattip/sphinx-affiliates/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 Allow search to include documents from more than one [Sphinx

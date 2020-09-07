@@ -1,4 +1,4 @@
-name: Python codeqa/test
+name: Tests
 
 on:
   push:
