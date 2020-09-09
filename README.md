@@ -5,7 +5,7 @@
 
 
 Allow search to include documents from more than one [Sphinx
-documentation](http://www.sphinx-doc.org) html site. 
+documentation](http://www.sphinx-doc.org) html site.
 
 This is useful when
 you have a number of github repositories under one org, are using sphinx
@@ -31,12 +31,13 @@ extensions = [
 # Where this site's build is hosted, this will be the URL for all the search
 # results from this site.
 affiliate_options = {
-    'canonical_url': "https://affiliate_search.github.io",  
+    'canonical_url': "https://affiliate_search.github.io",
 }
 
-# Other sites to add to the search of this site
+# Other sites to add to the search of this site. HTTP urls may get blocked
+# as cross-site scripting
 sphinx_affiliates = [
-    'https://abc.com/affiliate_searchindex.js',  
-    'https://def.com/affiliate_searchindex.js',
+    '../other_repo1/affiliate_searchindex.js',
+    'https://affiliate_search.github.io/other_repo2/affiliate_searchindex.js',
 ]
 ```
