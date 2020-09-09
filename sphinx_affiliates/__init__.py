@@ -3,7 +3,7 @@ import shutil
 import types
 import sphinx
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 # For type annotations
 if False:
