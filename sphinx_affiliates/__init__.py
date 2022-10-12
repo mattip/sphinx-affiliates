@@ -1,10 +1,11 @@
+from __future__ import print_function
 import codecs
 import os
 import shutil
 import types
 import sphinx
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 
 def pre_2_replace(search, affiliates, line, lines):
@@ -19,7 +20,7 @@ def pre_2_replace(search, affiliates, line, lines):
     for affiliate in affiliates:
         lines.append(fmt % (path, affiliate))
     lines.append('  <script type="text/javascript">\n')
-    
+
 
 def add_affiliates(app):
     builder = app.builder
@@ -74,7 +75,12 @@ def add_affiliates(app):
             with codecs.open(search, 'w', encoding=encoding,
                              errors='xmlcharrefreplace') as f:
                 for line in lines:
-                    f.write(line)
+                    try:
+                        f.write(line)
+                    except UnicodeDecodeError as e:
+                        print('error in line', str(e))
+                        print(line)
+
         # Copy our version of searchtools.js
         my_searchtools = os.path.join(os.path.dirname(__file__), 'searchtools.js')
         your_searchtools = os.path.join(self.outdir, '_static', 'searchtools.js')
