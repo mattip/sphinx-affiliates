@@ -21,13 +21,23 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        python-version: [3.6, 3.8, pypy3]
-        sphinx-version: [2.4.4, 3.0.4, 3.2.1]
+        python-version: [3.6, 3.8, pypy3.8]
+        sphinx-version: [2.4.4, 3.2.1, 5.2.3]
+        exclude:
+          - python-version: 3.8
+            sphinx-version: 2.4.4
+          - python-version: pypy3.8
+            sphinx-version: 2.4.4
+          - python-version: 3.8
+            sphinx-version: 3.2.1
+          - python-version: pypy3.8
+            sphinx-version: 3.2.1
+        
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install sphinx
