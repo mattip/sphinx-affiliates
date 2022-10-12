@@ -30,7 +30,7 @@ def add_affiliates(app: "Sphinx") -> None:
         with open(searchindexfn) as fid_in:
             txt = fid_in.read()
             if txt.startswith('Search.setIndex({'):
-                prefix = 'Search.setAffiliate({rootUrl="%s",' % rootUrl
+                prefix = 'Search.setAffiliate({rootUrl:"%s",' % rootUrl
                 if self.indexer_dumps_unicode:
                     with open(affiliatefn, 'w', encoding='utf-8') as fid_out:
                         fid_out.write(prefix + txt[17:])
