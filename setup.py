@@ -24,7 +24,7 @@ setup(
     include_package_data=True,
     url="https://github.com/mattip/sphinx-affiliates",
     license="MIT",
-    python_requires=">=3.6,==2.7",
+    python_requires=">=2.7,!=3.1,!=3.2,!=3.3,!=3.4,!=3.5",
     install_requires=["sphinx>=2"],
     extras_require={
         "testing": [
