@@ -51,7 +51,7 @@ def add_affiliates(app: "Sphinx") -> None:
                         for affiliate in affiliates:
                             txt = line.replace(self.searchindex_filename,
                                                affiliate)
-                            lines.append(f'{txt}s\n')
+                            lines.append(f'{txt:s}\n')
             with open(search, 'w', encoding=encoding,
                       errors='xmlcharrefreplace') as f:
                 for line in lines:
